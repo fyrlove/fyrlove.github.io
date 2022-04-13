@@ -11,10 +11,11 @@
 window.onload = function(){ 
 
 	if(isWeiXin()){ 
-    alert("是微信扫码")
+    
       var p = document.getElementsByTagName('p'); 
+      alert(p);
       p[0].innerHTML = window.navigator.userAgent; 
-      
+      window.location.href = "https://qiniu.lepayedu.com/release_download_apk/release_parent.apk";
 	} else{
     alert("不是微信扫码")
     window.location.href = "https://qiniu.lepayedu.com/release_download_apk/release_parent.apk";
