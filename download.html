@@ -48,6 +48,7 @@ var jumpToapp = function () {
 if (isIOS()) {
 　　window.location.href = "sxz://sxz.com";//伪协议scheme
 } else if (isAndroid()) {
+ alert(33333);
 　　var ifr = document.createElement('iframe');
 　　ifr.src = "sxz://sxz.com";//伪协议scheme
 　　ifr.style.display = 'none';
@@ -55,6 +56,7 @@ if (isIOS()) {
 　　}
 　}
 $('#open_app').click(function () {
+ alert(111111);
 　　openApp();
 })
  
@@ -62,6 +64,7 @@ var openApp = function () {
 　　if (browser.isIOS()) {
 　　　　window.location.href = "ios下载地址";
 　　} else if (browser.isAndroid()) {
+     alert(2222);
 　　　　window.location.href = "https://qiniu.lepayedu.com/release_download_apk/release_parent.apk";
  }
  
