@@ -6,12 +6,12 @@
   
   <title>从零开始绕过 DexProtector 加固的 Frida 检测（二） | fyrlove</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta name="description" content="从零开始绕过 DexProtector 加固的 Frida 检测（二）app版本更新了，如何快速进行处理？如何使用frida-server实现过检测？（本文由 id：小佳、fyrlove、roysue 共同完成） 这一篇可以看成是《 从零开始绕过 DexProtector 加固的 Frida 检测》的续集：上一版文章里，我们从 0 开始，一路跟到 DexProtector 的匿名段，把 Frida">
+  <meta name="description" content="app版本更新了，如何快速进行处理？如何使用frida-server实现过检测？（本文由 id：小佳、fyrlove、roysue 共同完成） 这一篇可以看成是《 从零开始绕过 DexProtector 加固的 Frida 检测》的续集：上一版文章里，我们从 0 开始，一路跟到 DexProtector 的匿名段，把 Frida 的几类检测点（maps &#x2F; 线程监控 &#x2F; inl">
 <meta property="og:type" content="article">
 <meta property="og:title" content="从零开始绕过 DexProtector 加固的 Frida 检测（二）">
 <meta property="og:url" content="https://fyrlove.github.io/2026/01/12/DexProtector2/index.html">
 <meta property="og:site_name" content="fyrlove">
-<meta property="og:description" content="从零开始绕过 DexProtector 加固的 Frida 检测（二）app版本更新了，如何快速进行处理？如何使用frida-server实现过检测？（本文由 id：小佳、fyrlove、roysue 共同完成） 这一篇可以看成是《 从零开始绕过 DexProtector 加固的 Frida 检测》的续集：上一版文章里，我们从 0 开始，一路跟到 DexProtector 的匿名段，把 Frida">
+<meta property="og:description" content="app版本更新了，如何快速进行处理？如何使用frida-server实现过检测？（本文由 id：小佳、fyrlove、roysue 共同完成） 这一篇可以看成是《 从零开始绕过 DexProtector 加固的 Frida 检测》的续集：上一版文章里，我们从 0 开始，一路跟到 DexProtector 的匿名段，把 Frida 的几类检测点（maps &#x2F; 线程监控 &#x2F; inl">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://fyrlove.github.io/images/DexProtector2/img_3.png">
 <meta property="og:image" content="https://fyrlove.github.io/images/DexProtector2/img_4.png">
@@ -43,7 +43,7 @@
 <meta property="og:image" content="https://fyrlove.github.io/images/DexProtector2/img_22.png">
 <meta property="og:image" content="https://fyrlove.github.io/images/DexProtector2/img_29.png">
 <meta property="article:published_time" content="2026-01-12T03:01:41.000Z">
-<meta property="article:modified_time" content="2026-01-12T05:52:28.180Z">
+<meta property="article:modified_time" content="2026-01-12T07:04:56.297Z">
 <meta property="article:author" content="fyrlove">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://fyrlove.github.io/images/DexProtector2/img_3.png">
@@ -125,7 +125,7 @@
     
     <div class="e-content article-entry" itemprop="articleBody">
       
-        <h1 id="从零开始绕过-DexProtector-加固的-Frida-检测（二）"><a href="#从零开始绕过-DexProtector-加固的-Frida-检测（二）" class="headerlink" title="从零开始绕过 DexProtector 加固的 Frida 检测（二）"></a>从零开始绕过 DexProtector 加固的 Frida 检测（二）</h1><h2 id="app版本更新了，如何快速进行处理？如何使用frida-server实现过检测？"><a href="#app版本更新了，如何快速进行处理？如何使用frida-server实现过检测？" class="headerlink" title="app版本更新了，如何快速进行处理？如何使用frida-server实现过检测？"></a>app版本更新了，如何快速进行处理？如何使用frida-server实现过检测？</h2><p>（本文由 id：小佳、fyrlove、roysue 共同完成）</p>
+        <h2 id="app版本更新了，如何快速进行处理？如何使用frida-server实现过检测？"><a href="#app版本更新了，如何快速进行处理？如何使用frida-server实现过检测？" class="headerlink" title="app版本更新了，如何快速进行处理？如何使用frida-server实现过检测？"></a>app版本更新了，如何快速进行处理？如何使用frida-server实现过检测？</h2><p>（本文由 id：小佳、fyrlove、roysue 共同完成）</p>
 <p>这一篇可以看成是《 <a target="_blank" rel="noopener" href="https://bbs.kanxue.com/thread-289170.htm">从零开始绕过 DexProtector 加固的 Frida 检测</a>》的续集：<br>上一版文章里，我们从 0 开始，一路跟到 DexProtector 的匿名段，把 Frida 的几类检测点（maps &#x2F; 线程监控 &#x2F; inline hook &#x2F; SHA256 校验等）一一打通，在当时的版本上实现了比较完整的一套绕过方案。</p>
 <p>大家如果跟着实现了，可以发现，过掉检测后，会提示更新，这也是现实开发&#x2F;对抗的真实场景：  </p>
 <blockquote>
@@ -518,7 +518,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://fyrlove.github.io/2026/01/12/DexProtector2/" data-id="cuidTAHxop_z8oD0XaUUpu_wE" data-title="从零开始绕过 DexProtector 加固的 Frida 检测（二）" class="article-share-link"><span class="fa fa-share">分享</span></a>
+      <a data-url="https://fyrlove.github.io/2026/01/12/DexProtector2/" data-id="cuidH_OOOkDRBNJzrDt_EmP1V" data-title="从零开始绕过 DexProtector 加固的 Frida 检测（二）" class="article-share-link"><span class="fa fa-share">分享</span></a>
       
       
       
